@@ -1,32 +1,38 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <header class="hero">
+            <div class="hero-body">
+                <div class="content has-text-centered">
+                    <h1 class="title is-1">Etoa battle simulator - isitar</h1>
+                </div>
+            </div>
+        </header>
+        <section class="section">
+            <router-view/>
+        </section>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    etoa battle simulator.
+                </p>
+            </div>
+        </footer>
     </div>
-    <router-view/>
-  </div>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+    #app {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
 
-#nav {
-  padding: 30px;
+        > header,
+        > footer {
+            flex: 0 0 auto;
+        }
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+        > section {
+            flex: 1 0 auto;
+        }
     }
-  }
-}
 </style>
