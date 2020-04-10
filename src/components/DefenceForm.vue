@@ -21,7 +21,7 @@
                 </div>
                 <div class="field">
                     <label class="checkbox">
-                        <input type="checkbox">
+                        <input type="checkbox" :value="ingi" @change="e => setIngi(e.target.checked)">
                         Ingi
                     </label>
 
@@ -55,6 +55,8 @@
             quantityHandle: Function,
             removeHandle: Function,
             title: String,
+            ingi: Boolean,
+            setIngi: Function,
         },
         data() {
             return {
@@ -68,7 +70,7 @@
             allDefences(): Defence[] {
                 const playerDefenceIds = this.playerDefences.map(s => s.id);
                 return this.$store.state.defences.filter((d: Defence) => !playerDefenceIds.includes(d.id));
-            }
+            },
         },
         methods: {
             addDefence(id: number) {

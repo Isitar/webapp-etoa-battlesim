@@ -1,5 +1,12 @@
 <template>
     <div id="app">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="https://isitar.ch">
+                    <img src="@/assets/logo.png">
+                </a>
+            </div>
+        </nav>
         <header class="hero">
             <div class="hero-body">
                 <div class="content has-text-centered">
@@ -13,7 +20,7 @@
         <footer class="footer">
             <div class="content has-text-centered">
                 <p>
-                    etoa battle simulator.
+                    etoa battle simulator - by isitar
                 </p>
             </div>
         </footer>

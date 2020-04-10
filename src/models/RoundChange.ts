@@ -5,4 +5,5 @@ export interface RoundChange {
     id: number,
     shipChanges: Ship[],
     defenceChanges: Defence[],
+    maxHeal: number,
 }

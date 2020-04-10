@@ -8,5 +8,7 @@ export interface Defence {
     shield?: number,
     weapon?: number,
     regeneration?: number,
-    experience?: boolean
+    experience?: boolean,
+    wfFactor?: number,
+    repairFactor?: number,
 }

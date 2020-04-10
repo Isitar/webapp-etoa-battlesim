@@ -10,4 +10,6 @@ export interface Ship {
     regeneration?: number,
     capacity?: number,
     experience?: boolean
+    wfFactor?: number,
+    repairFactor?: number,
 }

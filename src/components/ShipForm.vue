@@ -64,7 +64,7 @@
             },
             allShips(): Ship[] {
                 const playerShipIds = this.playerShips.map(s => s.id);
-                return this.$store.state.ships.filter((s: Ship) => !playerShipIds.includes(s.id));
+                return this.$store.state.ships.filter((s: Ship) => !playerShipIds.includes(s.id)).sort((s1: Ship, s2: Ship) => s1.name?.localeCompare(s2.name ?? 'Z'));
             }
         },
         methods: {
@@ -80,7 +80,6 @@
             },
 
             shipName(id: number): string | null {
-                console.log('trying to find ship with id', id);
                 return this.$store.state.ships.find((s: Ship) => id === s.id)?.name ?? null;
             },
         }
