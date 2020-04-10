@@ -29,13 +29,16 @@
             </form>
             <div class="field">
                 <label class="label">Verteidigung hinzufügen</label>
-                <div class="control">
-                    <select @change="e => addDefence(e.target.value)" :value="addDefenceValue">
-                        <option></option>
-                        <option v-for="defence in allDefences" :key="'select-defence' + defence.id" :value="defence.id">
-                            {{defence.name}}
-                        </option>
-                    </select>
+
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        <select @change="e => addDefence(e.target.value)" :value="addDefenceValue">
+                            <option></option>
+                            <option v-for="defence in allDefences" :key="'select-defence' + defence.id" :value="defence.id">
+                                {{defence.name}}
+                            </option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>

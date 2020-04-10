@@ -5,9 +5,7 @@
                 <h1 class="card-header-title">Kampfbericht</h1>
             </header>
             <div class="card-content">
-                <p class="nl2br">
-                    {{battleText}}
-                </p>
+                <p class="nl2br">{{battleText}} </p>
             </div>
         </div>
 

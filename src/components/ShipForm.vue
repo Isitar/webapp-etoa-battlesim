@@ -25,13 +25,15 @@
 
                 <div class="field">
                     <label class="label">Schiff hinzufügen</label>
-                    <div class="control">
-                        <select @change="e => addShip(e.target.value)" :value="addShipValue">
-                            <option></option>
-                            <option v-for="ship in allShips" :key="'select-ships' + ship.id" :value="ship.id">
-                                {{ship.name}}
-                            </option>
-                        </select>
+                    <div class="control is-expanded">
+                        <div class="select is-fullwidth">
+                            <select @change="e => addShip(e.target.value)" :value="addShipValue">
+                                <option></option>
+                                <option v-for="ship in allShips" :key="'select-ships' + ship.id" :value="ship.id">
+                                    {{ship.name}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </form>
