@@ -4,6 +4,7 @@ export interface Defence {
     costTitan?: number,
     costSilicon?: number,
     costPVC?: number,
+    costTricium?: number,
     structure?: number,
     shield?: number,
     weapon?: number,

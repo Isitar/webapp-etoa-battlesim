@@ -1,22 +1,22 @@
 import {Ship} from "@/models/Ship";
 import {Defence} from "@/models/Defence";
 
-const ships: Ship[] = [
-    {
-        id: 1,
-        name: "AIN Sonde",
-        costTitan: 3000,
-        costSilicon: 1500,
-        costPVC: 2000,
-        structure: 1,
-        shield: 1,
-        weapon: 1,
-        regeneration: 0,
-        capacity: 15000,
-        experience: false,
-        wfFactor: 0.5,
-        repairFactor: 0
-    },
+const ships: Ship[] = [{
+    id: 1,
+    name: "AIN Sonde",
+    costTitan: 3000,
+    costSilicon: 1500,
+    costPVC: 2000,
+    structure: 1,
+    shield: 1,
+    weapon: 1,
+    regeneration: 0,
+    capacity: 15000,
+    experience: false,
+    wfFactor: 0.5,
+    repairFactor: 0,
+    costTricium: 1000
+},
     {
         id: 2,
         name: "ALAMAK Trümmersammler",
@@ -30,7 +30,8 @@ const ships: Ship[] = [
         capacity: 150000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 10000
     },
     {
         id: 3,
@@ -45,7 +46,8 @@ const ships: Ship[] = [
         capacity: 15000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 0
     },
     {
         id: 4,
@@ -60,7 +62,8 @@ const ships: Ship[] = [
         capacity: 500,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 1750
     },
     {
         id: 5,
@@ -75,7 +78,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 6,
@@ -90,7 +94,8 @@ const ships: Ship[] = [
         capacity: 6000000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 12000000
     },
     {
         id: 7,
@@ -105,7 +110,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 43600
     },
     {
         id: 8,
@@ -120,7 +126,8 @@ const ships: Ship[] = [
         capacity: 500,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 50
     },
     {
         id: 9,
@@ -135,7 +142,8 @@ const ships: Ship[] = [
         capacity: 325000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 2000
     },
     {
         id: 10,
@@ -150,7 +158,8 @@ const ships: Ship[] = [
         capacity: 200,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 0
     },
     {
         id: 11,
@@ -165,7 +174,8 @@ const ships: Ship[] = [
         capacity: 60000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 10000
     },
     {
         id: 12,
@@ -180,7 +190,8 @@ const ships: Ship[] = [
         capacity: 40000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 17250
     },
     {
         id: 13,
@@ -195,7 +206,8 @@ const ships: Ship[] = [
         capacity: 1500,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 16500
     },
     {
         id: 14,
@@ -210,7 +222,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 15,
@@ -225,7 +238,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 16,
@@ -240,7 +254,8 @@ const ships: Ship[] = [
         capacity: 12000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 7000
     },
     {
         id: 17,
@@ -255,7 +270,8 @@ const ships: Ship[] = [
         capacity: 375000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 1200
     },
     {
         id: 18,
@@ -270,7 +286,8 @@ const ships: Ship[] = [
         capacity: 15000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 22200
     },
     {
         id: 19,
@@ -285,7 +302,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 100
     },
     {
         id: 20,
@@ -300,7 +318,8 @@ const ships: Ship[] = [
         capacity: 325000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 2000
     },
     {
         id: 21,
@@ -315,7 +334,8 @@ const ships: Ship[] = [
         capacity: 22000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 18000
     },
     {
         id: 22,
@@ -330,7 +350,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 23,
@@ -345,7 +366,8 @@ const ships: Ship[] = [
         capacity: 17500,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 25000
     },
     {
         id: 24,
@@ -360,7 +382,8 @@ const ships: Ship[] = [
         capacity: 3000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 750
     },
     {
         id: 25,
@@ -375,7 +398,8 @@ const ships: Ship[] = [
         capacity: 40000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 25000
     },
     {
         id: 26,
@@ -390,7 +414,8 @@ const ships: Ship[] = [
         capacity: 5,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 1000
     },
     {
         id: 27,
@@ -405,7 +430,8 @@ const ships: Ship[] = [
         capacity: 8500,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 19500
     },
     {
         id: 28,
@@ -420,7 +446,8 @@ const ships: Ship[] = [
         capacity: 500,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 2000
     },
     {
         id: 29,
@@ -435,7 +462,8 @@ const ships: Ship[] = [
         capacity: 300,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 50
     },
     {
         id: 30,
@@ -450,7 +478,8 @@ const ships: Ship[] = [
         capacity: 20000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 1000
     },
     {
         id: 31,
@@ -465,7 +494,8 @@ const ships: Ship[] = [
         capacity: 230000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 415000
     },
     {
         id: 32,
@@ -480,7 +510,8 @@ const ships: Ship[] = [
         capacity: 600000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 5000
     },
     {
         id: 33,
@@ -495,7 +526,8 @@ const ships: Ship[] = [
         capacity: 325000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 2000
     },
     {
         id: 34,
@@ -510,7 +542,8 @@ const ships: Ship[] = [
         capacity: 15000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 13500
     },
     {
         id: 35,
@@ -525,7 +558,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 36,
@@ -540,7 +574,8 @@ const ships: Ship[] = [
         capacity: 5000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 2000
     },
     {
         id: 37,
@@ -555,7 +590,8 @@ const ships: Ship[] = [
         capacity: 300,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 300
     },
     {
         id: 38,
@@ -570,7 +606,8 @@ const ships: Ship[] = [
         capacity: 17500,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 12500
     },
     {
         id: 39,
@@ -585,7 +622,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 40,
@@ -600,7 +638,8 @@ const ships: Ship[] = [
         capacity: 120000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 60000
     },
     {
         id: 41,
@@ -615,7 +654,8 @@ const ships: Ship[] = [
         capacity: 2000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 11500
     },
     {
         id: 42,
@@ -630,7 +670,8 @@ const ships: Ship[] = [
         capacity: 90000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 4000
     },
     {
         id: 43,
@@ -645,7 +686,8 @@ const ships: Ship[] = [
         capacity: 1500,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 100
     },
     {
         id: 44,
@@ -660,7 +702,8 @@ const ships: Ship[] = [
         capacity: 600000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 1750000
     },
     {
         id: 45,
@@ -675,7 +718,8 @@ const ships: Ship[] = [
         capacity: 15000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 50000
     },
     {
         id: 46,
@@ -690,7 +734,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 47,
@@ -705,7 +750,8 @@ const ships: Ship[] = [
         capacity: 18000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 10000
     },
     {
         id: 48,
@@ -720,7 +766,8 @@ const ships: Ship[] = [
         capacity: 325000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 23000
     },
     {
         id: 49,
@@ -735,7 +782,8 @@ const ships: Ship[] = [
         capacity: 1000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 165000
     },
     {
         id: 50,
@@ -750,7 +798,8 @@ const ships: Ship[] = [
         capacity: 1000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 3000
     },
     {
         id: 51,
@@ -765,7 +814,8 @@ const ships: Ship[] = [
         capacity: 1000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 300
     },
     {
         id: 52,
@@ -780,7 +830,8 @@ const ships: Ship[] = [
         capacity: 1000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 0
     },
     {
         id: 53,
@@ -795,7 +846,8 @@ const ships: Ship[] = [
         capacity: 1000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 2100
     },
     {
         id: 54,
@@ -810,7 +862,8 @@ const ships: Ship[] = [
         capacity: 8000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 2750
     },
     {
         id: 55,
@@ -825,7 +878,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 56,
@@ -840,7 +894,8 @@ const ships: Ship[] = [
         capacity: 20000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 55000
     },
     {
         id: 57,
@@ -855,7 +910,8 @@ const ships: Ship[] = [
         capacity: 150000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 160000
     },
     {
         id: 58,
@@ -870,7 +926,8 @@ const ships: Ship[] = [
         capacity: 800,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 2400
     },
     {
         id: 59,
@@ -885,7 +942,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 4250000
     },
     {
         id: 60,
@@ -900,7 +958,8 @@ const ships: Ship[] = [
         capacity: 600000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 7500000
     },
     {
         id: 61,
@@ -915,7 +974,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 10500000
     },
     {
         id: 62,
@@ -930,7 +990,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 60000000
     },
     {
         id: 63,
@@ -945,7 +1006,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 600000000
     },
     {
         id: 64,
@@ -960,7 +1022,8 @@ const ships: Ship[] = [
         capacity: 10000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 1200
     },
     {
         id: 65,
@@ -975,7 +1038,8 @@ const ships: Ship[] = [
         capacity: 500,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 3000
     },
     {
         id: 66,
@@ -990,7 +1054,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 67,
@@ -1005,7 +1070,8 @@ const ships: Ship[] = [
         capacity: 50000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 50000
     },
     {
         id: 68,
@@ -1020,7 +1086,8 @@ const ships: Ship[] = [
         capacity: 190000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 1500
     },
     {
         id: 69,
@@ -1035,7 +1102,8 @@ const ships: Ship[] = [
         capacity: 65000,
         experience: false,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 0
     },
     {
         id: 70,
@@ -1050,7 +1118,8 @@ const ships: Ship[] = [
         capacity: 0,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 350000
     },
     {
         id: 71,
@@ -1065,7 +1134,8 @@ const ships: Ship[] = [
         capacity: 350000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 570000
     },
     {
         id: 72,
@@ -1080,7 +1150,8 @@ const ships: Ship[] = [
         capacity: 2500,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 1800
     },
     {
         id: 73,
@@ -1095,7 +1166,8 @@ const ships: Ship[] = [
         capacity: 150,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 0
     },
     {
         id: 74,
@@ -1110,7 +1182,8 @@ const ships: Ship[] = [
         capacity: 16000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
+        repairFactor: 0,
+        costTricium: 50000
     },
     {
         id: 75,
@@ -1125,23 +1198,39 @@ const ships: Ship[] = [
         capacity: 40000,
         experience: true,
         wfFactor: 0.5,
-        repairFactor: 0
-    }
-];
+        repairFactor: 0,
+        costTricium: 0
+    }];
 
 const defences: Defence[] = [
+    {
+        id: 1,
+        name: "CASTOR Hochenergieschild",
+        costTitan: 95000,
+        costSilicon: 40000,
+        costPVC: 25000,
+        costTricium: 45000,
+        structure: 52500,
+        shield: 105000,
+        weapon: 0,
+        regeneration: 0,
+        experience: true,
+        wfFactor: 0.4,
+        repairFactor: 0.4
+    },
     {
         id: 2,
         name: "KAPPA Minen",
         costTitan: 500,
         costSilicon: 300,
         costPVC: 100,
+        costTricium: 400,
         structure: 5,
         shield: 5,
         weapon: 500,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1150,12 +1239,13 @@ const defences: Defence[] = [
         costTitan: 20000,
         costSilicon: 50000,
         costPVC: 15000,
+        costTricium: 10000,
         structure: 15000,
         shield: 1200,
         weapon: 0,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1164,12 +1254,13 @@ const defences: Defence[] = [
         costTitan: 25000000,
         costSilicon: 20000000,
         costPVC: 12000000,
+        costTricium: 11500000,
         structure: 14000000,
         shield: 9500000,
         weapon: 14500000,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1178,12 +1269,13 @@ const defences: Defence[] = [
         costTitan: 750000,
         costSilicon: 525000,
         costPVC: 325000,
+        costTricium: 165000,
         structure: 300000,
         shield: 350000,
         weapon: 275000,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1192,12 +1284,13 @@ const defences: Defence[] = [
         costTitan: 750000,
         costSilicon: 525000,
         costPVC: 325000,
+        costTricium: 165000,
         structure: 300000,
         shield: 350000,
         weapon: 275000,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1206,12 +1299,13 @@ const defences: Defence[] = [
         costTitan: 6500,
         costSilicon: 3500,
         costPVC: 1900,
+        costTricium: 3000,
         structure: 3150,
         shield: 1900,
         weapon: 1700,
         regeneration: 825,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1220,12 +1314,13 @@ const defences: Defence[] = [
         costTitan: 6500,
         costSilicon: 3500,
         costPVC: 1900,
+        costTricium: 3000,
         structure: 3150,
         shield: 1900,
         weapon: 1700,
         regeneration: 825,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1234,12 +1329,13 @@ const defences: Defence[] = [
         costTitan: 1000,
         costSilicon: 700,
         costPVC: 500,
+        costTricium: 300,
         structure: 450,
         shield: 325,
         weapon: 350,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1248,12 +1344,13 @@ const defences: Defence[] = [
         costTitan: 1000,
         costSilicon: 700,
         costPVC: 500,
+        costTricium: 300,
         structure: 450,
         shield: 325,
         weapon: 350,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1262,26 +1359,13 @@ const defences: Defence[] = [
         costTitan: 1350000,
         costSilicon: 1000000,
         costPVC: 625000,
+        costTricium: 1050000,
         structure: 1400000,
         shield: 2100000,
         weapon: 0,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
-        repairFactor: 0.4
-    },
-    {
-        id: 1,
-        name: "CASTOR Hochenergieschild",
-        costTitan: 95000,
-        costSilicon: 40000,
-        costPVC: 25000,
-        structure: 52500,
-        shield: 105000,
-        weapon: 0,
-        regeneration: 0,
-        experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1290,12 +1374,13 @@ const defences: Defence[] = [
         costTitan: 250000000,
         costSilicon: 20000000,
         costPVC: 5000000,
+        costTricium: 25000000,
         structure: 25000000,
         shield: 225000000,
         weapon: 0,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1304,12 +1389,13 @@ const defences: Defence[] = [
         costTitan: 800,
         costSilicon: 475,
         costPVC: 425,
+        costTricium: 0,
         structure: 300,
         shield: 150,
         weapon: 250,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1318,12 +1404,13 @@ const defences: Defence[] = [
         costTitan: 800,
         costSilicon: 475,
         costPVC: 425,
+        costTricium: 0,
         structure: 300,
         shield: 150,
         weapon: 250,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1332,12 +1419,13 @@ const defences: Defence[] = [
         costTitan: 3000,
         costSilicon: 1200,
         costPVC: 600,
+        costTricium: 1800,
         structure: 1200,
         shield: 3500,
         weapon: 0,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1346,12 +1434,13 @@ const defences: Defence[] = [
         costTitan: 3900,
         costSilicon: 3100,
         costPVC: 1500,
+        costTricium: 2100,
         structure: 1500,
         shield: 2000,
         weapon: 1800,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     },
     {
@@ -1360,12 +1449,13 @@ const defences: Defence[] = [
         costTitan: 3900,
         costSilicon: 3100,
         costPVC: 1500,
+        costTricium: 2100,
         structure: 1500,
         shield: 2000,
         weapon: 1800,
         regeneration: 0,
         experience: true,
-        wfFactor: 0.5,
+        wfFactor: 0.4,
         repairFactor: 0.4
     }
 ];

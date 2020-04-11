@@ -8,6 +8,8 @@ import {Defence} from "@/models/Defence";
 import {defences, ships} from "@/data/BaseData";
 import {Player} from "@/models/Player";
 import {BattleReport} from "@/models/BattleReport";
+import {PlayerShip} from "@/models/PlayerShip";
+import {PlayerDefence} from "@/models/PlayerDefence";
 
 Vue.use(Vuex);
 
@@ -39,6 +41,15 @@ export default new Vuex.Store<State>({
         battleReport: null,
 
     } as State,
+    getters: {
+        shipById: state => (id: number) => {
+            return state.ships.find(s => id === s.id);
+        },
+        defenceById: state => (id: number) => {
+            return state.defences.find(s => id === s.id);
+        },
+
+    },
     mutations: {
         loadRound(state, payload: number) {
             const rounds = state.rounds.filter(r => r.id <= payload).sort((r1, r2) => r1.id - r2.id);
@@ -244,7 +255,7 @@ export default new Vuex.Store<State>({
 
                 // cleanup
                 battleReport.attacker.ships = battleReport.attacker.ships.filter(s => s.quantity > 0);
-                battleReport.defender.ships = battleReport.defender.ships.filter(s => s.quantity > 0 || (shipList.find(ship => s.id === ship.id)?.repairFactor ?? 0) > 0);
+                battleReport.defender.ships = battleReport.defender.ships.filter(s => s.quantity > 0 || (context.getters.shipById(s.id)?.repairFactor ?? 0) > 0);
                 battleReport.defender.defences = battleReport.defender.defences.filter(d => d.quantity > 0 || (defenceList.find(defence => d.id === defence.id)?.repairFactor ?? 0) > 0);
                 winnerDeclared = battleReport.attacker.ships.filter(s => s.quantity > 0).length === 0 || (battleReport.defender.ships.filter(s => s.quantity > 0).length + battleReport.defender.defences.filter(d => d.quantity > 0).length) === 0;
                 roundIndex++;
@@ -253,7 +264,7 @@ export default new Vuex.Store<State>({
             //restore ships
             for (let i = 0; i < contextDefender.ships.length; i++) {
                 const defenderShip = contextDefender.ships[i];
-                const ship = shipList.find(s => s.id === defenderShip.id);
+                const ship = context.getters.shipById(defenderShip.id);
                 if (undefined === ship?.repairFactor || ship.repairFactor <= 0) {
                     continue;
                 }
@@ -295,6 +306,57 @@ export default new Vuex.Store<State>({
                 console.log('repaired ', restore, ' of ', defence?.name, ' since only ', remaining, 'remained (factor:', repairFactor, ')');
             }
 
+            //calc wf
+            const destroyedShips: ({ id: number; quantity: number; costTitan: number; costSilicon: number; costPVC: number; costTricium: number; wfFactor: number; experience: boolean } | undefined)[] =
+                contextAttacker.ships.map(s => ({id: s.id, quantity: s.quantity - (battleReport.attacker.ships.find(remainingShip => remainingShip.id === s.id)?.quantity ?? 0)}))
+                    .concat(contextDefender.ships.map(s => ({id: s.id, quantity: s.quantity - (battleReport.defender.ships.find(remainingShip => remainingShip.id === s.id)?.quantity ?? 0)})))
+                    .map(s => {
+                        const ship = shipList.find(ship => s.id === ship.id);
+                        if (undefined === ship) {
+                            return undefined;
+                        }
+                        return {
+                            id: s.id,
+                            quantity: s.quantity,
+                            costTitan: ship.costTitan ?? 0,
+                            costSilicon: ship.costSilicon ?? 0,
+                            costPVC: ship.costPVC ?? 0,
+                            costTricium: ship.costTricium ?? 0,
+                            wfFactor: ship.wfFactor ?? 0,
+                            experience: ship.experience ?? false,
+                        };
+                    })
+                    .filter(s => undefined !== s);
+
+            const destroyedDefences: ({ id: number; quantity: number; costTitan: number; costSilicon: number; costPVC: number; costTricium: number; wfFactor: number; experience: boolean } | undefined)[] =
+                contextDefender.defences.map(s => ({id: s.id, quantity: s.quantity - (battleReport.defender.defences.find(remainingDefence => remainingDefence.id === s.id)?.quantity ?? 0)}))
+                    .map(d => {
+                        const defence = defenceList.find(defence => d.id === defence.id);
+                        if (undefined === defence) {
+                            return undefined;
+                        }
+                        console.log('defence', d);
+                        console.log('defence', defence);
+                        return {
+                            id: d.id,
+                            quantity: d.quantity,
+                            costTitan: defence.costTitan ?? 0,
+                            costSilicon: defence.costSilicon ?? 0,
+                            costPVC: defence.costPVC ?? 0,
+                            costTricium: defence.costTricium ?? 0,
+                            wfFactor: defence.wfFactor ?? 0,
+                            experience: defence.experience ?? false,
+                        };
+                    })
+                    .filter(s => undefined !== s);
+
+
+            battleReport.wfTitan = destroyedShips.reduce((carry, s) => carry + (s?.quantity ?? 0) * (s?.costTitan ?? 0) * (s?.wfFactor ?? 0), 0)
+                + destroyedDefences.reduce((carry, d) => carry + (d?.quantity ?? 0) * (d?.costTitan ?? 0) * (d?.wfFactor ?? 0), 0);
+            battleReport.wfSilicon = destroyedShips.reduce((carry, s) => carry + (s?.quantity ?? 0) * (s?.costSilicon ?? 0) * (s?.wfFactor ?? 0), 0)
+                + destroyedDefences.reduce((carry, d) => carry + (d?.quantity ?? 0) * (d?.costSilicon ?? 0) * (d?.wfFactor ?? 0), 0);
+            battleReport.wfPVC = destroyedShips.reduce((carry, s) => carry + (s?.quantity ?? 0) * (s?.costPVC ?? 0) * (s?.wfFactor ?? 0), 0)
+                + destroyedDefences.reduce((carry, d) => carry + (d?.quantity ?? 0) * (d?.costPVC ?? 0) * (d?.wfFactor ?? 0), 0);
 
             context.commit('setBattleReport', battleReport);
         }

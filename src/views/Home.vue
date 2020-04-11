@@ -7,7 +7,7 @@
         <p>
             {{attackerWeapon}} ({{attackerWeaponPercent}}) | {{attackerShield}} ({{attackerShieldPercent}}) | {{attackerStructure}} ({{attackerStructurePercent}})
         </p>
-        <div class="columns">
+        <div class="columns  is-multiline">
             <div class="column">
                 <ResearchForm :handle="attackerResearch" :setterHandle="attackerResearchSet"></ResearchForm>
             </div>
@@ -21,7 +21,7 @@
         </div>
 
         <h2 class="title is-2">Verteidiger</h2>
-        <div class="columns">
+        <div class="columns  is-multiline">
             <div class="column">
                 <ResearchForm :handle="defenderResearch" :setterHandle="defenderResearchSet"></ResearchForm>
             </div>
@@ -42,7 +42,7 @@
         </div>
 
         <h2 class="title is-2">Kampf</h2>
-        <FightResult></FightResult>
+        <BattleResult></BattleResult>
     </div>
 </template>
 
@@ -53,7 +53,7 @@
     import ShipForm from "@/components/ShipForm.vue";
     import DefenceForm from "@/components/DefenceForm.vue";
     import MysticumForm from "@/components/MysticumForm.vue";
-    import FightResult from "@/components/FightResult.vue";
+    import BattleResult from "@/components/BattleResult.vue";
 
     export default Vue.extend({
         name: 'Home',
@@ -63,7 +63,7 @@
             MysticumForm,
             ShipForm,
             DefenceForm,
-            FightResult,
+            BattleResult,
         },
         computed: {
             attackerResearch() {
