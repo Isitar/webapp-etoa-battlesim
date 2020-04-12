@@ -325,16 +325,19 @@ export default new Vuex.Store<State>({
 
             const playerEntityToWF = (playerEntity: PlayerEntity, entityList: Entity[]): { wfTitan: number; wfSilicon: number; wfPVC: number } => {
                 const entity = entityList.find(s => playerEntity.id === s.id);
-                if (undefined === entity || !(entity?.experience ?? false)) {
+                if (undefined === entity) {
                     return {wfTitan: 0, wfSilicon: 0, wfPVC: 0};
                 }
 
                 const wfFactor = entity.wfFactor ?? 0;
+                const quantity = Math.ceil(playerEntity.quantity * wfFactor);
+
+                // console.log('destroyed: ', playerEntity.quantity, entity.name, 'wfQuantity: ', quantity, 'resourceCost: ', entity.costTitan, entity.costSilicon, entity.costPVC);
                 return {
-                    wfTitan: playerEntity.quantity * (entity?.costTitan ?? 0) * wfFactor,
-                    wfSilicon: playerEntity.quantity * (entity.costSilicon ?? 0) * wfFactor,
-                    wfPVC: playerEntity.quantity * (entity.costTricium ?? 0) * wfFactor
-                }
+                    wfTitan: quantity * (entity?.costTitan ?? 0),
+                    wfSilicon: quantity * (entity.costSilicon ?? 0),
+                    wfPVC: quantity * (entity.costPVC ?? 0)
+                };
             };
 
             const wfList = destroyedShipsAttacker.concat(destroyedShipsDefender).map(s => playerEntityToWF(s, shipList)).concat(destroyedDefencesDefender.map(d => playerEntityToWF(d, defenceList)));
