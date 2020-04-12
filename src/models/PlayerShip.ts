@@ -1,4 +1,4 @@
-export interface PlayerShip {
-    id: number,
-    quantity: number,
+import {PlayerEntity} from "@/models/PlayerEntity";
+
+export interface PlayerShip extends PlayerEntity {
 }

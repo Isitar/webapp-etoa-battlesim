@@ -51,6 +51,17 @@
                     </div>
                 </div>
             </div>
+            <div class="column is-one-quarter-desktop">
+                <div class="card">
+                    <header class="card-header">
+                        <h1 class="card-header-title">EXP</h1>
+                    </header>
+                    <div class="card-content">
+                        <p>Angreiffer: {{expAttacker}}</p>
+                        <p>Verteidiger: {{expDefender}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -93,6 +104,12 @@
             },
             wfPVC(): string {
                 return this.formatNumber(this.battleReport?.wfPVC ?? 0);
+            },
+            expAttacker(): string {
+                return this.formatNumber(this.battleReport?.expAttacker ?? 0);
+            },
+            expDefender(): string {
+                return this.formatNumber(this.battleReport?.expDefender ?? 0);
             },
         },
         methods: {

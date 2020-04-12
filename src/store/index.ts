@@ -8,8 +8,8 @@ import {Defence} from "@/models/Defence";
 import {defences, ships} from "@/data/BaseData";
 import {Player} from "@/models/Player";
 import {BattleReport} from "@/models/BattleReport";
-import {PlayerShip} from "@/models/PlayerShip";
-import {PlayerDefence} from "@/models/PlayerDefence";
+import {Entity} from "@/models/Entity";
+import {PlayerEntity} from "@/models/PlayerEntity";
 
 Vue.use(Vuex);
 
@@ -307,56 +307,64 @@ export default new Vuex.Store<State>({
             }
 
             //calc wf
-            const destroyedShips: ({ id: number; quantity: number; costTitan: number; costSilicon: number; costPVC: number; costTricium: number; wfFactor: number; experience: boolean } | undefined)[] =
-                contextAttacker.ships.map(s => ({id: s.id, quantity: s.quantity - (battleReport.attacker.ships.find(remainingShip => remainingShip.id === s.id)?.quantity ?? 0)}))
-                    .concat(contextDefender.ships.map(s => ({id: s.id, quantity: s.quantity - (battleReport.defender.ships.find(remainingShip => remainingShip.id === s.id)?.quantity ?? 0)})))
-                    .map(s => {
-                        const ship = shipList.find(ship => s.id === ship.id);
-                        if (undefined === ship) {
-                            return undefined;
-                        }
-                        return {
-                            id: s.id,
-                            quantity: s.quantity,
-                            costTitan: ship.costTitan ?? 0,
-                            costSilicon: ship.costSilicon ?? 0,
-                            costPVC: ship.costPVC ?? 0,
-                            costTricium: ship.costTricium ?? 0,
-                            wfFactor: ship.wfFactor ?? 0,
-                            experience: ship.experience ?? false,
-                        };
-                    })
-                    .filter(s => undefined !== s);
-
-            const destroyedDefences: ({ id: number; quantity: number; costTitan: number; costSilicon: number; costPVC: number; costTricium: number; wfFactor: number; experience: boolean } | undefined)[] =
-                contextDefender.defences.map(s => ({id: s.id, quantity: s.quantity - (battleReport.defender.defences.find(remainingDefence => remainingDefence.id === s.id)?.quantity ?? 0)}))
-                    .map(d => {
-                        const defence = defenceList.find(defence => d.id === defence.id);
-                        if (undefined === defence) {
-                            return undefined;
-                        }
-                        console.log('defence', d);
-                        console.log('defence', defence);
-                        return {
-                            id: d.id,
-                            quantity: d.quantity,
-                            costTitan: defence.costTitan ?? 0,
-                            costSilicon: defence.costSilicon ?? 0,
-                            costPVC: defence.costPVC ?? 0,
-                            costTricium: defence.costTricium ?? 0,
-                            wfFactor: defence.wfFactor ?? 0,
-                            experience: defence.experience ?? false,
-                        };
-                    })
-                    .filter(s => undefined !== s);
+            const destroyedShipsAttacker = contextAttacker.ships.map(s => ({
+                id: s.id,
+                quantity: s.quantity - (battleReport.attacker.ships.find(remainingShip => remainingShip.id === s.id)?.quantity ?? 0)
+            }));
+            const destroyedShipsDefender = contextDefender.ships.map(s => ({
+                id: s.id,
+                quantity: s.quantity - (battleReport.defender.ships.find(remainingShip => remainingShip.id === s.id)?.quantity ?? 0)
+            }));
 
 
-            battleReport.wfTitan = destroyedShips.reduce((carry, s) => carry + (s?.quantity ?? 0) * (s?.costTitan ?? 0) * (s?.wfFactor ?? 0), 0)
-                + destroyedDefences.reduce((carry, d) => carry + (d?.quantity ?? 0) * (d?.costTitan ?? 0) * (d?.wfFactor ?? 0), 0);
-            battleReport.wfSilicon = destroyedShips.reduce((carry, s) => carry + (s?.quantity ?? 0) * (s?.costSilicon ?? 0) * (s?.wfFactor ?? 0), 0)
-                + destroyedDefences.reduce((carry, d) => carry + (d?.quantity ?? 0) * (d?.costSilicon ?? 0) * (d?.wfFactor ?? 0), 0);
-            battleReport.wfPVC = destroyedShips.reduce((carry, s) => carry + (s?.quantity ?? 0) * (s?.costPVC ?? 0) * (s?.wfFactor ?? 0), 0)
-                + destroyedDefences.reduce((carry, d) => carry + (d?.quantity ?? 0) * (d?.costPVC ?? 0) * (d?.wfFactor ?? 0), 0);
+            const destroyedDefencesDefender = contextDefender.defences.map(s => ({
+                id: s.id,
+                quantity: s.quantity - (battleReport.defender.defences.find(remainingDefence => remainingDefence.id === s.id)?.quantity ?? 0)
+            }));
+
+
+            const playerEntityToWF = (playerEntity: PlayerEntity, entityList: Entity[]): { wfTitan: number; wfSilicon: number; wfPVC: number } => {
+                const entity = entityList.find(s => playerEntity.id === s.id);
+                if (undefined === entity || !(entity?.experience ?? false)) {
+                    return {wfTitan: 0, wfSilicon: 0, wfPVC: 0};
+                }
+
+                const wfFactor = entity.wfFactor ?? 0;
+                return {
+                    wfTitan: playerEntity.quantity * (entity?.costTitan ?? 0) * wfFactor,
+                    wfSilicon: playerEntity.quantity * (entity.costSilicon ?? 0) * wfFactor,
+                    wfPVC: playerEntity.quantity * (entity.costTricium ?? 0) * wfFactor
+                }
+            };
+
+            const wfList = destroyedShipsAttacker.concat(destroyedShipsDefender).map(s => playerEntityToWF(s, shipList)).concat(destroyedDefencesDefender.map(d => playerEntityToWF(d, defenceList)));
+
+            battleReport.wfTitan = wfList.reduce((carry, wf) => carry + wf.wfTitan, 0);
+            battleReport.wfSilicon = wfList.reduce((carry, wf) => carry + wf.wfSilicon, 0);
+            battleReport.wfPVC = wfList.reduce((carry, wf) => carry + wf.wfPVC, 0);
+
+            // calc exp
+            const playerEntityToCostIfExperience = (playerEntity: PlayerEntity, entityList: Entity[]): number => {
+                const entity = entityList.find(s => playerEntity.id === s.id);
+                if (!(entity?.experience ?? false)) {
+                    return 0;
+                }
+                const cost = (entity?.costTitan ?? 0) + (entity?.costSilicon ?? 0) + (entity?.costPVC ?? 0) + (entity?.costTricium ?? 0);
+
+                return playerEntity.quantity * cost;
+            };
+
+            battleReport.expAttacker =
+                Math.ceil(
+                    destroyedShipsDefender.map(s => playerEntityToCostIfExperience(s, shipList))
+                        .concat(destroyedDefencesDefender.map(d => playerEntityToCostIfExperience(d, defenceList)))
+                        .reduce((carry, x) => carry + x, 0)
+                    / 100_000);
+
+            battleReport.expDefender = Math.ceil(
+                destroyedShipsAttacker.map(s => playerEntityToCostIfExperience(s, shipList))
+                    .reduce((carry, x) => carry + x, 0)
+                / 100_000);
 
             context.commit('setBattleReport', battleReport);
         }
