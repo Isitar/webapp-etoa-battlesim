@@ -185,43 +185,49 @@ export default new Vuex.Store<State>({
             const defenceList = context.state.defences;
             let roundIndex = 1;
             let winnerDeclared = false;
+            const initialAttackerStructure = battleReport.attacker.getStructure(shipList, defenceList);
+            const initialAttackerShield = battleReport.attacker.getShield(shipList, defenceList);
+            const initialDefenderStructure = battleReport.defender.getStructure(shipList, defenceList);
+            const initialDefenderShield = battleReport.defender.getShield(shipList, defenceList);
+
+            let attackerStructureShield = initialAttackerStructure + initialAttackerShield;
+            let defenderStructureShield = initialDefenderStructure + initialDefenderShield;
+
             while (roundIndex <= 5 && !winnerDeclared) {
                 battleReport.battleText += `Runde ${roundIndex}\n`;
 
                 // fight per round
-                const initialAttackerStructure = battleReport.attacker.getStructure(shipList, defenceList);
-                const initialAttackerShield = battleReport.attacker.getShield(shipList, defenceList);
-                const attackerWeapon = battleReport.attacker.getAttack(shipList, defenceList);
 
-                const initialDefenderStructure = battleReport.defender.getStructure(shipList, defenceList);
-                const initialDefenderShield = battleReport.defender.getShield(shipList, defenceList);
+                const attackerWeapon = battleReport.attacker.getAttack(shipList, defenceList);
                 const defenderWeapon = battleReport.defender.getAttack(shipList, defenceList);
 
 
-                const attackerRemainingStructureShield = Math.max(0, initialAttackerShield + initialAttackerStructure - defenderWeapon);
-                const defenderRemainingStructureShield = Math.max(0, initialDefenderShield + initialDefenderStructure - attackerWeapon);
+                attackerStructureShield = Math.max(0, attackerStructureShield - defenderWeapon);
+                defenderStructureShield = Math.max(0, defenderStructureShield - attackerWeapon);
 
-                const remainingAttackerPercentAfterAttack = attackerRemainingStructureShield / (initialAttackerShield + initialAttackerStructure);
-                const remainingDefenderPercentAfterAttack = defenderRemainingStructureShield / (initialDefenderShield + initialDefenderStructure);
+                const remainingAttackerPercentAfterAttack = attackerStructureShield / (initialAttackerShield + initialAttackerStructure);
+                const remainingDefenderPercentAfterAttack = defenderStructureShield / (initialDefenderShield + initialDefenderStructure);
 
 
-                battleReport.battleText += `Der Angreiffer schiesst mit ${attackerWeapon} gegen den Verteidiger. Der Verteidiger hat danach noch ${defenderRemainingStructureShield} Struktur & Schildpunkte\n`;
-                battleReport.battleText += `Der Verteidiger schiesst mit ${defenderWeapon} gegen den Verteidiger. Der Verteidiger hat danach noch ${attackerRemainingStructureShield} Struktur & Schildpunkte\n`;
+                battleReport.battleText += `Der Angreiffer schiesst mit ${attackerWeapon} gegen den Verteidiger. Der Verteidiger hat danach noch ${defenderStructureShield} Struktur & Schildpunkte\n`;
+                battleReport.battleText += `Der Verteidiger schiesst mit ${defenderWeapon} gegen den Angreiffer. Der Angreiffer hat danach noch ${attackerStructureShield} Struktur & Schildpunkte\n`;
 
                 // destory ships
                 for (let i = 0; i < battleReport.attacker.ships.length; i++) {
                     const ship = battleReport.attacker.ships[i];
-                    ship.quantity = Math.ceil(remainingAttackerPercentAfterAttack * ship.quantity);
+
+                    ship.quantity = context.getters.shipById(ship.id).structure === 0 ? 0 : Math.ceil(remainingAttackerPercentAfterAttack * contextAttacker.ships[i].quantity);
                 }
 
                 for (let i = 0; i < battleReport.defender.ships.length; i++) {
                     const ship = battleReport.defender.ships[i];
-                    ship.quantity = Math.ceil(remainingDefenderPercentAfterAttack * ship.quantity);
+
+                    ship.quantity = context.getters.shipById(ship.id).structure === 0 ? 0 : Math.ceil(remainingDefenderPercentAfterAttack * contextDefender.ships[i].quantity);
                 }
 
                 for (let i = 0; i < battleReport.defender.defences.length; i++) {
                     const defence = battleReport.defender.defences[i];
-                    defence.quantity = Math.ceil(remainingDefenderPercentAfterAttack * defence.quantity);
+                    defence.quantity = Math.ceil(remainingDefenderPercentAfterAttack * contextDefender.defences[i].quantity);
                 }
 
                 // heal ships
@@ -230,34 +236,34 @@ export default new Vuex.Store<State>({
 
                 if (attackerRegeneration > 0 && remainingAttackerPercentAfterAttack > 0) {
                     // revert damage by dividing / remainingAttackerPercentAfterAttack and then calculate the "new" damage by multiplying (regen + after dmg)/initial
-                    const regenerationPercentage = ((attackerRemainingStructureShield + attackerRegeneration) / (initialAttackerShield + initialAttackerStructure)) / remainingAttackerPercentAfterAttack;
+                    const regenerationPercentage = ((attackerStructureShield + attackerRegeneration) / (initialAttackerShield + initialAttackerStructure)) / remainingAttackerPercentAfterAttack;
                     // destory ships
                     for (let i = 0; i < battleReport.attacker.ships.length; i++) {
                         const ship = battleReport.attacker.ships[i];
-                        ship.quantity = Math.ceil(regenerationPercentage * ship.quantity);
+                        ship.quantity = Math.ceil(regenerationPercentage * contextAttacker.ships[i].quantity);
                     }
                     battleReport.battleText += `Der Angreiffer stellt ${attackerRegeneration} Punkte wiederher.\n`;
                 }
                 if (defenderRegeneration > 0 && remainingDefenderPercentAfterAttack > 0) {
-                    const regenerationPercentage = ((defenderRemainingStructureShield + defenderRegeneration) / (initialDefenderShield + initialDefenderStructure)) / remainingDefenderPercentAfterAttack;
+                    const regenerationPercentage = ((defenderStructureShield + defenderRegeneration) / (initialDefenderShield + initialDefenderStructure)) / remainingDefenderPercentAfterAttack;
                     // destory ships
                     for (let i = 0; i < battleReport.defender.ships.length; i++) {
                         const ship = battleReport.defender.ships[i];
-                        ship.quantity = Math.ceil(regenerationPercentage * ship.quantity);
+                        ship.quantity = Math.ceil(regenerationPercentage * contextDefender.ships[i].quantity);
                     }
 
                     for (let i = 0; i < battleReport.defender.defences.length; i++) {
                         const defence = battleReport.defender.defences[i];
-                        defence.quantity = Math.ceil(defenderRegeneration * defence.quantity);
+                        defence.quantity = Math.ceil(defenderRegeneration * contextDefender.defences[i].quantity);
                     }
                     battleReport.battleText += `Der Verteidiger stellt ${defenderRegeneration} Punkte wiederher.\n`;
                 }
 
                 // cleanup
-                battleReport.attacker.ships = battleReport.attacker.ships.filter(s => s.quantity > 0);
-                battleReport.defender.ships = battleReport.defender.ships.filter(s => s.quantity > 0 || (context.getters.shipById(s.id)?.repairFactor ?? 0) > 0);
-                battleReport.defender.defences = battleReport.defender.defences.filter(d => d.quantity > 0 || (defenceList.find(defence => d.id === defence.id)?.repairFactor ?? 0) > 0);
-                winnerDeclared = battleReport.attacker.ships.filter(s => s.quantity > 0).length === 0 || (battleReport.defender.ships.filter(s => s.quantity > 0).length + battleReport.defender.defences.filter(d => d.quantity > 0).length) === 0;
+                // battleReport.attacker.ships = battleReport.attacker.ships.filter(s => s.quantity > 0);
+                // battleReport.defender.ships = battleReport.defender.ships.filter(s => s.quantity > 0 || (context.getters.shipById(s.id)?.repairFactor ?? 0) > 0);
+                // battleReport.defender.defences = battleReport.defender.defences.filter(d => d.quantity > 0 || (defenceList.find(defence => d.id === defence.id)?.repairFactor ?? 0) > 0);
+                winnerDeclared = !battleReport.attacker.ships.some(s => s.quantity > 0) || (!battleReport.defender.ships.some(s => s.quantity > 0) && !battleReport.defender.defences.some(d => d.quantity > 0));
                 roundIndex++;
             }
 

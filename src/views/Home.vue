@@ -4,8 +4,8 @@
         <RoundSelect></RoundSelect>
 
         <h2 class="title is-2">Angreiffer</h2>
-        <p>
-            {{attackerWeapon}} ({{attackerWeaponPercent}}) | {{attackerShield}} ({{attackerShieldPercent}}) | {{attackerStructure}} ({{attackerStructurePercent}})
+        <p class="subtitle">
+            Waffe: {{attackerWeapon}} ({{attackerWeaponPercent}}) | Struktur: {{attackerStructure}} ({{attackerStructurePercent}}) | Schild: {{attackerShield}} ({{attackerShieldPercent}})
         </p>
         <div class="columns  is-multiline">
             <div class="column">
@@ -21,6 +21,9 @@
         </div>
 
         <h2 class="title is-2">Verteidiger</h2>
+        <p class="subtitle">
+            Waffe: {{defenderWeapon}} ({{defenderWeaponPercent}}) | Struktur: {{defenderStructure}} ({{defenderStructurePercent}}) | Schild: {{defenderShield}} ({{defenderShieldPercent}})
+        </p>
         <div class="columns  is-multiline">
             <div class="column">
                 <ResearchForm :handle="defenderResearch" :setterHandle="defenderResearchSet"></ResearchForm>
@@ -202,7 +205,25 @@
             },
             attackerStructurePercent(): string {
                 return this.formatPercent(this.$store.state.attacker.getStructureResearchModificator());
-            }
+            },
+            defenderWeapon(): string {
+                return this.formatNumber(this.$store.state.defender.getAttack(this.$store.state.ships, this.$store.state.defences));
+            },
+            defenderWeaponPercent(): string {
+                return this.formatPercent(this.$store.state.defender.getAttackResearchModificator());
+            },
+            defenderShield(): string {
+                return this.formatNumber(this.$store.state.defender.getShield(this.$store.state.ships, this.$store.state.defences));
+            },
+            defenderShieldPercent(): string {
+                return this.formatPercent(this.$store.state.defender.getShieldResearchModificator());
+            },
+            defenderStructure(): string {
+                return this.formatNumber(this.$store.state.defender.getStructure(this.$store.state.ships, this.$store.state.defences));
+            },
+            defenderStructurePercent(): string {
+                return this.formatPercent(this.$store.state.defender.getStructureResearchModificator());
+            },
         },
         methods: {
             formatPercent(v: number): string {
