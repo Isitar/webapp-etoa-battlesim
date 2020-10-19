@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-half-desktop">
+            <div class="column is-half-widescreen is-three-quarters-desktop is-three-quarters-tablet">
                 <div class="card">
                     <header class="card-header">
                         <h1 class="card-header-title">Kampfbericht</h1>
